@@ -1,0 +1,1 @@
+web: pywallet.py --web
