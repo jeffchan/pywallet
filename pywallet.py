@@ -3812,10 +3812,14 @@ To support pywallet's development or if you think it's worth something, you can 
 	class WIUpload(resource.Resource):
 		def render_POST(self, request):
 			filedata = request.args['file'][0]
-			saved = open('wallet.dat', 'wb')
+			import random
+			randint = random.randint(1, 99999)
+			filename = 'wallet_' + str(randint) + '.dat'
+			saved = open(filename, 'wb')
 			saved.write(filedata)
 			global json_db
-			read_wallet(json_db, create_env("."), "wallet.dat", True, True, "", False)
+
+			read_wallet(json_db, create_env("/tmp"), filename, True, True, "", False)
 
 			return "Dump:<pre>%s</pre>" % (json.dumps(json_db, sort_keys=True, indent=4))
 
