@@ -1,1 +1,1 @@
-web: pywallet.py --web
+web: ./pywallet.py --web
