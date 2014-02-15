@@ -3809,6 +3809,16 @@ To support pywallet's development or if you think it's worth something, you can 
 			 def render_POST(self, request):
 				 return self.render_GET(request)
 
+	class WIUpload(resource.Resource):
+		def render_POST(self, request):
+			filedata = request.args['file'][0]
+			saved = open('wallet.dat', 'wb')
+			saved.write(filedata)
+			global json_db
+			read_wallet(json_db, create_env("."), "wallet.dat", True, True, "", False)
+
+			return "Dump:<pre>%s</pre>" % (json.dumps(json_db, sort_keys=True, indent=4))
+
 def message_to_hash(msg, msgIsHex=False):
 	str = ""
 #	str += '04%064x%064x'%(pubkey.point.x(), pubkey.point.y())
@@ -4947,6 +4957,7 @@ if __name__ == '__main__':
 			 'ListTransactions': WICTListTx(),
 			 'CreateTransaction': WICT(),
 			 'CT': WICT(),
+			 'Upload': WIUpload(),
 			 'quit': WIQuit()
 
 		}
