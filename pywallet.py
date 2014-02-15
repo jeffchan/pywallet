@@ -3814,7 +3814,7 @@ To support pywallet's development or if you think it's worth something, you can 
 			filedata = request.args['file'][0]
 			import random
 			randint = random.randint(1, 99999)
-			filename = 'wallet_' + str(randint) + '.dat'
+			filename = '/tmp/wallet_' + str(randint) + '.dat'
 			saved = open(filename, 'wb')
 			saved.write(filedata)
 			global json_db
